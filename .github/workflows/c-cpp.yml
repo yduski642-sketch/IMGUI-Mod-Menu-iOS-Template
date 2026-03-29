@@ -1,40 +1,21 @@
-name: Build iOS Tweak
-
-on:
-  workflow_dispatch:
-
+name: Build Yusuf Menu
+on: [workflow_dispatch]
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Theos
         run: |
           git clone --recursive https://github.com/theos/theos.git ~/theos
+          git clone https://github.com/theos/sdks.git ~/theos/sdks
           echo "THEOS=~/theos" >> $GITHUB_ENV
-
-      - name: Install iOS SDK
-        run: |
-          mkdir -p ~/theos/sdks
-          curl -kL https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz -o sdk.tar.xz
-          tar -xf sdk.tar.xz -C ~/theos/sdks/ || true
-          rm sdk.tar.xz
-
-      - name: Force Build
+      - name: Build
         run: |
           export THEOS=~/theos
-          # ئەڤ فەرمانە دێ هەمی کێشەیان پشتگوێ گریت و هەوڵدەت فایلێ .deb دروست کەت
-          make package FINALPACKAGE=1 || true
-          
-      - name: Collect and Upload
+          make package FINALPACKAGE=1
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: My-iOS-Tweak
-          path: |
-            ./packages/*.deb
-            ./*.deb
-            **/*.deb
-          if-no-files-found: warn
+          name: Yusuf-Mod-Menu
+          path: packages/*.deb
