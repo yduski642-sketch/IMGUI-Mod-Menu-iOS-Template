@@ -1,33 +1,25 @@
-#import "Macros.h"
+#import "IMGUI/imgui.h"
+#import "IMGUI/imgui_internal.h"
 
-// --- ١. ل ڤێرێ ناڤێ خۆ و مینیۆیێ بگوهۆڕە ---
-void setup() {
-    
-    // ناڤێ مینیۆیا تە
-    [menu setTitle:@"Yusuf Mod Menu"];
-    
-    // ناڤێ گەشەپێدەری (خۆ)
-    [menu addLabel:@"Owner: @Yusuf"];
-
-    // دوگمەیێن هاکێ (Switches)
-    [menu addSwitch:@"High Jump" description:@"Jump higher than others"];
-    [menu addSwitch:@"Fast Run" description:@"Speed Hack"];
-    [menu addSwitch:@"Wallhack" description:@"See through walls"];
-    
-    // لینکا تلگرامێ یان پەیجێ خۆ
-    [menu addLabel:@"Join: t.me/YusufMod"];
+void SetYusufStyle() {
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowRounding = 8.0f;
+    style.Colors[ImGuiCol_WindowBg] = ImVec4(0.06f, 0.06f, 0.10f, 0.94f);
+    style.Colors[ImGuiCol_Header] = ImVec4(0.12f, 0.45f, 0.80f, 1.00f);
+    style.Colors[ImGuiCol_Button] = ImVec4(0.12f, 0.45f, 0.80f, 0.50f);
+    style.Colors[ImGuiCol_CheckMark] = ImVec4(0.12f, 0.45f, 0.80f, 1.00f);
 }
 
-// --- ٢. ل ڤێرێ ئۆفسێتێن (Offsets) یارییێ دانە ---
-// ئەڤ بەشە ئەرکێ هاکێ جێبەجێ دکەت
-void speed_hack() {
-    // ئەڤە ئۆفسێتێ تە یێ نموونەیە
-    patchOffset(ENCRYPTOFFSET("0x1002DB3C8"), ENCRYPTHEX("0xC0035FD6"));
+void DrawMenu() {
+    SetYusufStyle();
+    ImGui::Begin("YUSUF MOD MENU", nullptr, ImGuiWindowFlags_NoCollapse);
+    ImGui::TextColored(ImVec4(0.0f, 0.7f, 1.0f, 1.0f), "Welcome, Yusuf!");
+    ImGui::Separator();
+    
+    static bool wallhack = false;
+    static bool aimbot = false;
+    ImGui::Checkbox("Enable Wallhack", &wallhack);
+    ImGui::Checkbox("Enable Aimbot", &aimbot);
+    
+    ImGui::End();
 }
-
-// ئەگەر تە ڤیا هاکەکێ دی زێدە بکەی، ب ڤی شێوەی بنڤێسە:
-/*
-void god_mode() {
-    patchOffset(ENCRYPTOFFSET("OFFSET_HERE"), ENCRYPTHEX("HEX_HERE"));
-}
-*/
