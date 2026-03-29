@@ -26,10 +26,17 @@ jobs:
       - name: Build Package
         run: |
           export THEOS=~/theos
-          make package FINALPACKAGE=1 || echo "Build continues despite errors"
+          # ئەڤە دێ هەمی فایلێن پڕۆژەی پێکڤە گرێدەت
+          make package FINALPACKAGE=1
           
-      - name: Upload Tweak
+      - name: Debug - Find Files
+        run: |
+          echo "گەڕیان ل دویڤ فایلێن دروستبووی:"
+          find . -name "*.deb"
+
+      - name: Upload Tweak File
         uses: actions/upload-artifact@v4
         with:
-          name: iOS-Tweak-File
-          path: packages/*.deb
+          name: My-iOS-Tweak
+          path: "**/*.deb"
+          if-no-files-found: error
