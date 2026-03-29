@@ -26,13 +26,17 @@ jobs:
       - name: Build Package
         run: |
           export THEOS=~/theos
+          # ئەڤە دێ هەمی فایلێن پڕۆژەی پێکڤە گرێدەت
           make package FINALPACKAGE=1
-          # ئەڤ فەرمانا ل خوارێ دێ فایلێ دروستبووی ل هەر جهەکێ بیت کۆپی کەتە سەر ڕوویێ سەرەکی
-          find . -name "*.deb" -exec cp {} . \;
+          
+      - name: Debug - Find Files
+        run: |
+          echo "گەڕیان ل دویڤ فایلێن دروستبووی:"
+          find . -name "*.deb"
 
       - name: Upload Tweak File
         uses: actions/upload-artifact@v4
         with:
           name: My-iOS-Tweak
-          path: "./*.deb"
+          path: "**/*.deb"
           if-no-files-found: error
