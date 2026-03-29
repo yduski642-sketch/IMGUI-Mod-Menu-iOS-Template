@@ -1,29 +1,14 @@
-ARCHS = arm64 arm64e
-DEBUG = 0
-FINALPACKAGE = 1
-FOR_RELEASE = 1.mm
-THEOS_PACKAGE_SCHEME = rootless
+export ARCHS = arm64 arm64e
+export TARGET = iphone:clang:latest:14.0
 
 include $(THEOS)/makefiles/common.mk
 
-TWEAK_NAME = Example
-#If you want to change TWEAK_NAME just change up here. It will automatically change these below, don't need to change it by hand anymore!
+TWEAK_NAME = YusufMenu
 
-$(TWEAK_NAME)_FRAMEWORKS =  UIKit Foundation Security QuartzCore CoreGraphics CoreText  AVFoundation Accelerate GLKit SystemConfiguration GameController
+# لڤێرێ ناڤێ هەمی فایلێن گرنگ یێن تێدا هەین بنڤێسه
+YusufMenu_FILES = Tweak.xm IMGUI/imgui.cpp IMGUI/imgui_draw.cpp IMGUI/imgui_widgets.cpp IMGUI/imgui_tables.cpp IMGUI/imgui_demo.cpp
 
-$(TWEAK_NAME)_CCFLAGS = -std=c++11 -fno-rtti -fno-exceptions -DNDEBUG
-$(TWEAK_NAME)_CFLAGS = -fobjc-arc -Wno-deprecated-declarations -Wno-unused-variable -Wno-unused-value
-
-#Add dobby hook
-$(TWEAK_NAME)_OBJ_FILES = 5Toubun/libdobby.a
-
-$(TWEAK_NAME)_FILES = ImGuiDrawView.mm $(wildcard Esp/*.mm) $(wildcard Esp/*.m) $(wildcard IMGUI/*.cpp) $(wildcard IMGUI/*.mm)
-
-
-
-#$(TWEAK_NAME)_LIBRARIES += substrate
-# GO_EASY_ON_ME = 1
+YusufMenu_CFLAGS = -fobjc-arc
+YusufMenu_FRAMEWORKS = UIKit Foundation Security QuartzCore CoreGraphics CoreText
 
 include $(THEOS_MAKE_PATH)/tweak.mk
-
-
