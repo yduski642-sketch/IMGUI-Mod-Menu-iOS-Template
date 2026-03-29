@@ -26,13 +26,10 @@ jobs:
       - name: Build Package
         run: |
           export THEOS=~/theos
-          make package FINALPACKAGE=1 || echo "Build continues"
+          make package FINALPACKAGE=1
           
-      - name: Find and Upload Tweak
+      - name: Upload Tweak File
         uses: actions/upload-artifact@v4
         with:
           name: My-iOS-Tweak
-          path: |
-            ./packages/*.deb
-            ./*.deb
-            **/packages/*.deb
+          path: "**/*.deb"
