@@ -13,12 +13,17 @@ jobs:
 
       - name: Setup Theos
         run: |
-          git clone --recursive https://github.com/theos/theos.git ~/theos
+          if [ ! -d "~/theos" ]; then
+            git clone --recursive https://github.com/theos/theos.git ~/theos
+          fi
           echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Setup SDK
         run: |
-          git clone https://github.com/theos/sdks.git ~/theos/sdks
+          mkdir -p ~/theos/sdks
+          git clone https://github.com/theos/sdks.git temp_sdks
+          cp -r temp_sdks/* ~/theos/sdks/
+          rm -rf temp_sdks
 
       - name: Build Tweak
         run: |
