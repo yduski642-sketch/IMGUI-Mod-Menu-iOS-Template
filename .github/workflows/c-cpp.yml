@@ -5,7 +5,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: macos-12
 
     steps:
       - name: Checkout code
@@ -20,7 +20,7 @@ jobs:
         run: |
           mkdir -p ~/theos/sdks
           curl -kL https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz -o sdk.tar.xz
-          tar -xf sdk.tar.xz -C ~/theos/sdks/ || true
+          tar -xf sdk.tar.xz -C ~/theos/sdks/
           rm sdk.tar.xz
 
       - name: Build Package
