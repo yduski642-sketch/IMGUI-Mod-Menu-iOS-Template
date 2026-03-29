@@ -13,25 +13,22 @@ jobs:
 
       - name: Setup Theos
         run: |
-          if [ ! -d "~/theos" ]; then
-            git clone --recursive https://github.com/theos/theos.git ~/theos
-          fi
+          git clone --recursive https://github.com/theos/theos.git ~/theos
           echo "THEOS=~/theos" >> $GITHUB_ENV
 
       - name: Setup SDK
         run: |
-          mkdir -p ~/theos/sdks
-          git clone https://github.com/theos/sdks.git temp_sdks
-          cp -r temp_sdks/* ~/theos/sdks/
-          rm -rf temp_sdks
+          curl -L https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz -o ~/theos/sdks/iPhoneOS14.5.sdk.tar.xz
+          tar -xf ~/theos/sdks/iPhoneOS14.5.sdk.tar.xz -C ~/theos/sdks/
+          rm ~/theos/sdks/iPhoneOS14.5.sdk.tar.xz
 
       - name: Build Tweak
         run: |
           export THEOS=~/theos
-          make package FINALPACKAGE=1 || true
+          make package FINALPACKAGE=1
           
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: iOS-Mod-Menu
-          path: packages/*.dylib
+          path: packages/*.deb
