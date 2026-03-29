@@ -16,20 +16,20 @@ jobs:
           git clone --recursive https://github.com/theos/theos.git ~/theos
           echo "THEOS=~/theos" >> $GITHUB_ENV
 
-      - name: Setup iOS SDK
+      - name: Setup SDK (Alternative)
         run: |
           mkdir -p ~/theos/sdks
-          curl -L https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz -o iPhoneOS14.5.sdk.tar.xz
-          tar -xf iPhoneOS14.5.sdk.tar.xz -C ~/theos/sdks/
-          rm iPhoneOS14.5.sdk.tar.xz
+          curl -L https://github.com/theos/sdks/raw/master/iPhoneOS13.0.sdk.tar.xz -o sdk.tar.xz
+          tar -xf sdk.tar.xz -C ~/theos/sdks/
+          rm sdk.tar.xz
 
       - name: Build Package
         run: |
           export THEOS=~/theos
           make package FINALPACKAGE=1
           
-      - name: Upload Tweak File
+      - name: Upload Tweak
         uses: actions/upload-artifact@v4
         with:
-          name: My-iOS-Tweak
+          name: iOS-Tweak-File
           path: packages/*.deb
