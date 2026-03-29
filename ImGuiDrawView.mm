@@ -1,42 +1,8 @@
-name: Build iOS Tweak
+#import "ImGuiDrawView.h"
+#import "IMGUI/imgui.h"
+#import "IMGUI/imgui_internal.h"
+#import "IMGUI/imgui_impl_apple.h"
 
-on:
-  workflow_dispatch:
-
-jobs:
-  build:
-    runs-on: macos-latest
-
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup Theos
-        run: |
-          git clone --recursive https://github.com/theos/theos.git ~/theos
-          echo "THEOS=~/theos" >> $GITHUB_ENV
-
-      - name: Install iOS SDK
-        run: |
-          mkdir -p ~/theos/sdks
-          curl -kL https://github.com/theos/sdks/raw/master/iPhoneOS14.5.sdk.tar.xz -o sdk.tar.xz
-          tar -xf sdk.tar.xz -C ~/theos/sdks/ || true
-          rm sdk.tar.xz
-
-      - name: Build Package
-        run: |
-          export THEOS=~/theos
-          # ئەڤە دێ هەمی فایلێن پڕۆژەی پێکڤە گرێدەت
-          make package FINALPACKAGE=1
-          
-      - name: Debug - Find Files
-        run: |
-          echo "گەڕیان ل دویڤ فایلێن دروستبووی:"
-          find . -name "*.deb"
-
-      - name: Upload Tweak File
-        uses: actions/upload-artifact@v4
-        with:
-          name: My-iOS-Tweak
-          path: "**/*.deb"
-          if-no-files-found: error
+@implementation ImGuiDrawView
+// Empty clean view for build
+@end
